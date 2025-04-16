@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/navbar/Navbar';
 import Container from '@/components/global/container';
 import Providers from './providers';
+import {ClerkProvider} from '@clerk/nextjs'
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html lang='en' suppressHydrationWarning>
       <body className={inter.className}>
         <Providers>
@@ -28,5 +30,6 @@ export default function RootLayout({
         
         </body>
     </html>
+    </ClerkProvider>
   );
 }
