@@ -18,4 +18,5 @@ type NavLink = {
 	{href:'/admin/sales', label:'sales'},
 	{href:'/admin/products', label:'my products'},
 	{href:'/admin/products/create', label:'create product'},
+	{href:'/admin/sliders', label:'sliders'},
   ]

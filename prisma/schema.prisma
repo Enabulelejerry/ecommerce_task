@@ -96,3 +96,11 @@ model OrderItem {
   order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product   Product @relation(fields: [productId], references: [id])
 }
+
+model Slider {
+  id        String   @id @default(uuid())
+  title     String? // optional title for the slider image
+  imageUrl  String // URL/path to the slider image
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

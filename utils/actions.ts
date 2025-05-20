@@ -632,4 +632,75 @@ export const  getOrderWithProducts =  async(id:string) =>{
 	return order
 }
 
+export const createSliderAction = async (
+	prevState: any,
+	formData: FormData
+  ): Promise<{ message: string }> => {
+	 await getAdminUser();
+	 try {
+		   
+		  const file = formData.get('image') as File;
+		  const title =  formData.get('title') as string
+		  const validatedFile = validateWithZodSchema(imageSchema,{image:file})
+		  const fullPath = await uploadImage(validatedFile.image)
+
+		  await db.slider.create({
+			data:{
+		         title,
+				imageUrl:fullPath,
+				
+			}
+		  })
+
+		// return {message:'slider created'}
+	 } catch (error) {
+		return renderError(error)
+	 }
+
+	 redirect('/admin/sliders')
+  };
+
+  export const fetchAdminSlider = async () =>{
+	await getAdminUser();
+	const sliders = await db.slider.findMany({
+		orderBy:{
+			createdAt:'desc'
+		},
+		
+	})
+	return sliders;
+}
+
+ export const fetchSlider = async () =>{
+	const sliders = await db.slider.findMany({
+		select:{
+			  id:true,
+			 imageUrl:true
+		},
+		
+	})
+	return sliders;
+}
+
+export const deleteSliderAction = async(prevState:{sliderId:string}) =>{
+	const {sliderId} = prevState;
+	await getAdminUser();
+
+	try {
+		const slider = await db.slider.delete({
+			where:{
+				id:sliderId
+			}
+		})
+		await deleteImage(slider.imageUrl)
+		revalidatePath('/admin/sliders');
+		return {message:'slider removed'}
+	} catch (error) {
+		return renderError(error);
+	}
+  }
+
+
+
+
 
