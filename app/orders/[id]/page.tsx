@@ -37,7 +37,7 @@ async function UserOrderView({ params }: { params: { id: string } }) {
 				<p className="text-sm text-gray-600">Size: {item.size}</p>
 				<p className="text-sm text-gray-600">Color: {item.color}</p>
 			  </div>
-			  <p className="text-sm font-medium text-green-600 mt-1">${item.product.price}</p>
+			  <p className="text-sm font-medium text-green-600 mt-1">N{item.product.price}</p>
 			</div>
 		  </div>
 		))}
