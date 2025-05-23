@@ -11,7 +11,7 @@ async function UserOrderView({ params }: { params: { id: string } }) {
 		<h1 className="text-2xl font-bold mb-2">Order #{order?.id}</h1>
 		<div className="text-sm text-gray-600 space-y-1">
 		  <p><span className="font-medium">Status:</span> {order?.isPaid ? 'Paid' : 'Unpaid'}</p>
-		  <p><span className="font-medium">Total:</span> ${order?.orderTotal}</p>
+		  <p><span className="font-medium">Total:</span> N{order?.orderTotal}</p>
 
 		</div>
 	  </div>
