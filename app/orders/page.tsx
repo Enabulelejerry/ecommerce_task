@@ -25,7 +25,7 @@ async function OrdersPage() {
              <TableCaption>Total Orders: {orders.length}</TableCaption>
              <TableHeader>
                 <TableRow>
-                  <TableHead>Products</TableHead>
+                  <TableHead>Product Quantity</TableHead>
                    <TableHead>Order TOtal</TableHead>
                     <TableHead>Tax</TableHead>
                      <TableHead>Shipping</TableHead>

@@ -9,12 +9,13 @@ export const FirstColumn= ({name,image}:{image:string,name:string})=>{
 }
 
 
-export const SecondColumn = ({name,company,productId}:{name:string;company:string;productId:string}) =>{
+export const SecondColumn = ({name,company,productId,price}:{name:string;company:string;productId:string;price:number}) =>{
     return <div className="sm:w-48">
            <Link href={`/products/${productId}`}>
               <h3 className="capitalize font-medium hover:underline">{name}</h3>
               <h4 className="mt-2 capitalize text-xs">{company}</h4>
            </Link>
+           <p className="font-medium md:ml-auto">{formatCurrency(price)}</p>
     </div>
 }
 

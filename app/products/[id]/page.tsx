@@ -15,7 +15,9 @@ import {auth} from '@clerk/nextjs/server'
 
 async function SingleProductPage({params}:{params:{id:string}}) {
 	const  product =  await fetchSingleProduct(params.id)
-	const {name,image,company,description,price} = product
+	const {name,image,company,description,price,colors,sizes} = product
+	const colorArray: string[] = JSON.parse(colors || '[]');
+    const sizeArray: string[] = JSON.parse(sizes || '[]');
 	const dollarAmount =  formatCurrency(price)
 	const {userId} = auth();
     const reviewDoesNotExist = userId && !(await findExistingReview(userId,params.id))
@@ -41,7 +43,11 @@ async function SingleProductPage({params}:{params:{id:string}}) {
 				  <h4 className='text-xl mt-2'>{company}</h4>
 				  <p className='mt-3 text-md bg-muted inline-block p-2 rounded'>{dollarAmount}</p>
 				  <p className='mt-6 leading-8 text-muted-foreground'>{description}</p>
-				  <AddToCart productId={params.id} />
+				  <AddToCart 
+				  productId={params.id}
+				  colors={colorArray} 
+                   sizes={sizeArray}
+				   />
 			  </div>
 
 

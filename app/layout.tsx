@@ -8,8 +8,8 @@ import {ClerkProvider} from '@clerk/nextjs'
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Next Storefront',
-  description: 'A nifty store built with Next.js',
+  title: 'hwroyals',
+  description: 'A hwroyals store',
 };
 
 export default function RootLayout({

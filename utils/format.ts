@@ -1,12 +1,12 @@
 
 
 export const formatCurrency = (amount: number | null) => {
-	const value = amount || 0;
-	return new Intl.NumberFormat('en-US', {
-	  style: 'currency',
-	  currency: 'USD',
-	}).format(value);
-  };
+  const value = amount || 0;
+  return new Intl.NumberFormat('en-NG', {  // Nigerian English locale
+    style: 'currency',
+    currency: 'NGN',                        // Nigerian Naira currency code
+  }).format(value);
+};
 
 
   export const formatDate = (date:Date) =>{

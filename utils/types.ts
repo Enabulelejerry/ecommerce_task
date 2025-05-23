@@ -27,3 +27,4 @@ export type actionFunction = (
 export type CartItemWithProduct = Prisma.CartItemGetPayload<{
   include: { product: true };
 }>;
+

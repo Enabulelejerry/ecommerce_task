@@ -27,6 +27,7 @@ function CreateProductPage() {
               label='product name'
               defaultValue={name}
             />
+            
             <FormInput
               type='text'
               name='company'
@@ -34,6 +35,24 @@ function CreateProductPage() {
               defaultValue={company}/>
             <PriceInput />
             <ImageInput />
+          </div>
+
+          <div className='grid gap-4 md:grid-cols-2 my-4'>
+            <FormInput
+              type='text'
+              name='sizes'
+              label='Available Sizes (comma separated)'
+              placeholder="e.g. S, M, L, XL"
+            />
+            
+            <FormInput
+              type='text'
+              name='colors'
+              label='Available Colors (comma separated)'
+              placeholder="e.g. Red, Blue, Black"
+              />
+          
+
           </div>
           <TextAreaInput
             name='description'

@@ -75,6 +75,8 @@ export const createProductAction = async (
 	 try {
 		  const rawData = Object.fromEntries(formData)  
 		  const file = formData.get('image') as File;
+		  const colors =  formData.get('colors')?.toString().split(',').map(c => c.trim());
+		  const sizes =  formData.get('sizes')?.toString().split(',').map(c => c.trim());
 		  const validateFields = validateWithZodSchema(productSchema,rawData);
 		  const validatedFile = validateWithZodSchema(imageSchema,{image:file})
 		  const fullPath = await uploadImage(validatedFile.image)
@@ -83,7 +85,10 @@ export const createProductAction = async (
 			data:{
 				...validateFields,
 				image:fullPath,
-				clerkId:user.id
+				clerkId:user.id,
+				colors:JSON.stringify(colors),
+				sizes:JSON.stringify(sizes),
+
 			}
 		  })
 
@@ -407,10 +412,12 @@ errorOnFailure?:boolean
 	return cart
 };
 
-const updateOrCreateCartItem = async ({productId,cartId,amount}:{
+const updateOrCreateCartItem = async ({productId,cartId,amount,color,size}:{
 	productId:string;
 	cartId:string;
-	amount:number
+	amount:number,
+	color:string,
+	size:string
 }) => {
    let cartItem = await db.cartItem.findFirst({
 	where:{
@@ -424,13 +431,15 @@ const updateOrCreateCartItem = async ({productId,cartId,amount}:{
 			id:cartItem.id
 		},
 		data:{
-			amount:cartItem.amount+ amount
+			amount:cartItem.amount+ amount,
+			color,
+			size
 		}
 	});
 
    }else{
 	 cartItem =  await db.cartItem.create({
-		data :{amount,productId,cartId}
+		data :{amount,productId,cartId,color,size}
 	 })
    }
 };
@@ -480,10 +489,12 @@ export const addToCartAction = async (prevState:any,formData:FormData) => {
 	try {
 
 		const productId = formData.get('productId') as string;
+		const color = formData.get('color') as string
+		const size = formData.get('size') as string
 		const amount = Number(formData.get('amount'))
 		await fetchProduct(productId)
 		const cart = await fetchOrCreateCart({userId:user.id});
-		await updateOrCreateCartItem({productId,cartId:cart.id,amount})
+		await updateOrCreateCartItem({productId,cartId:cart.id,amount,color,size})
 		await updateCart(cart);
 	} catch (error) {
 		return renderError(error)
@@ -519,7 +530,7 @@ export const removeCartItemAction = async (
   
 };
 
-export const updateCartItemAction = async ({amount,cartItemId}:{amount:number;cartItemId:string}) => {
+export const updateCartItemAction = async ({amount,cartItemId,color,size}:{amount?:number;cartItemId:string,color?:string;size?:string}) => {
 	 const user = await getAuthUser()
 
 	 try {
@@ -531,6 +542,8 @@ export const updateCartItemAction = async ({amount,cartItemId}:{amount:number;ca
 			},
 			data:{
 				amount,
+				color,
+				size
 			}
 		  })
 		  await updateCart(cart)
@@ -574,6 +587,8 @@ export const createOrderAction = async (prevState: any, formData: FormData) => {
 			create: cart.cartItems.map((item: any) => ({
 			productId: item.productId,
 			quantity: item.amount,
+			color:item.color,
+			size:item.size
         }))
 		}
       },
