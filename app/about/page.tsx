@@ -12,14 +12,14 @@ function AboutPage() {
         </span>
       </h1>
       <p className="mt-6 text-lg tracking-wide leading-8 max-w-2xl mx-auto text-muted-foreground">
-        At <strong>HwRoyals</strong>, fashion is more than clothing — it's a statement. We're your go-to destination
-        for curated, trendy, and affordable fashion pieces that elevate your everyday style. Whether you're
+        At <strong>HwRoyals</strong>, fashion is more than clothing — it&apos;s a statement. We&apos;re your go-to destination
+        for curated, trendy, and affordable fashion pieces that elevate your everyday style. Whether you&apos;re
         dressing up for an event or refreshing your wardrobe, our collections are designed to make you feel confident,
         stylish, and truly royal.
       </p>
       <p className="mt-4 text-lg tracking-wide leading-8 max-w-2xl mx-auto text-muted-foreground">
         Discover the latest in fashion for men and women, handpicked for quality, comfort, and elegance. At HwRoyals,
-        we don’t just sell fashion — we deliver a premium shopping experience.
+        we don&apos;t just sell fashion — we deliver a premium shopping experience.
       </p>
     </section>
   );
