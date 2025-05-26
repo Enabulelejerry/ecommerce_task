@@ -19,6 +19,7 @@ const getAuthUser = async () =>{
 	return user
 }
 
+// action
 const getAdminUser = async () =>{
 	const user = await getAuthUser();
 	if(user.id !== process.env.ADMIN_USER_ID) redirect('/');
