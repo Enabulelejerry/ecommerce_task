@@ -11,7 +11,7 @@ type FormInputNumberProps = {
 function PriceInput({defaultValue}:FormInputNumberProps) {
   return (
 	<div className='mb-2'>
-		<Label htmlFor={name} className='capitalize'>Price ($)</Label>
+		<Label htmlFor={name} className='capitalize'>Price (N)</Label>
 		<Input id={name} type='number' name={name} min={0} defaultValue={defaultValue || 100} required />
 	</div>
   )

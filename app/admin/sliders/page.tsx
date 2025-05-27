@@ -20,7 +20,7 @@ import { IconButton } from '@/components/form/Buttons';
 
 async function SliderPage() {
       const sliders = await fetchAdminSlider();
-  if(sliders.length === 0) return <EmptyList />
+//   if(sliders.length === 0) return <EmptyList />
   return (
             
 	      <div>
