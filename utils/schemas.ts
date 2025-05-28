@@ -20,7 +20,7 @@ export const productSchema = z.object({
       return wordCount >= 10 && wordCount <= 1000;
     },
     {
-      message: 'description must be between 10 and 1000 words.',
+      message: 'description must be between 5 and 1000 words.',
     }
   ),
 });

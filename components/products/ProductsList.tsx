@@ -24,7 +24,7 @@ function ProductsList({products}:{products:Product[]}) {
                       fill
                       sizes='(max-width:768px) 100vw,(max-width:1200px) 50vw,33vw'
                       priority
-                      className='w-full rounded-md object-cover'
+                      className='w-full rounded-md object-contain'
                     />
                   </div>
 

@@ -17,7 +17,7 @@ import { fetchSlider } from '@/utils/actions';
 
 async function HeroCarousel() {
   const carouselImages = await fetchSlider();
-  return <div className='hidden lg:block'>
+  return <div className=''>
     <Carousel>
        <CarouselContent>
           {carouselImages.map((item)=>{
