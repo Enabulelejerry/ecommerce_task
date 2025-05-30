@@ -54,6 +54,12 @@ function CreateProductPage() {
           
 
           </div>
+          <FormInput
+              type='number'
+              name='qty'
+              label='product quantity'
+               
+              />
           <TextAreaInput
             name='description'
             labelText='product description'

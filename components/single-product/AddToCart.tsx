@@ -18,10 +18,11 @@ type AddToCartProps = {
   productId: string;
   colors: string[];
   sizes: string[];
+  productQty:number
 };
 
-function AddToCart({ productId, colors, sizes }: AddToCartProps) {
-  const [amount,setAmount] = useState(1);
+function AddToCart({ productId, colors, sizes,productQty }: AddToCartProps) {
+  const [amount,setAmount] = useState(productQty);
   const {userId} =  useAuth(); 
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
@@ -59,7 +60,21 @@ function AddToCart({ productId, colors, sizes }: AddToCartProps) {
           </SelectContent>
         </Select>
       )}
-            <SelectProductAmount mode={Mode.SingleProduct} amount={amount} setAmount={setAmount} />
+           {productQty && productQty > 0 ? (
+              <>
+              <h3>Product Quantity</h3>
+              <SelectProductAmount
+                mode={Mode.SingleProduct}
+                amount={amount}
+                setAmount={setAmount}
+                productQty={productQty}
+              />
+              </>
+              
+            ) : (
+              <h3 className='text-destructive'>Product out of stock</h3>
+            )}
+            
             {userId ? 
             <FormContainer action={addToCartAction}>
                <input type='hidden' name='productId' value={productId} />

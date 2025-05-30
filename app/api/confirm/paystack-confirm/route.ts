@@ -18,8 +18,34 @@ export const GET = async (req: NextRequest) => {
     const order = await db.order.findFirst({ where: { paystackReference: reference } });
 
     if (order) {
-      await db.order.update({ where: { id: order.id }, data: { isPaid: true } });
+     await db.order.update({ where: { id: order.id }, data: { isPaid: true } });
+
       await db.cart.delete({ where: { id: order.cartId! } });
+      const productItems = await db.orderItem.findMany({
+        where: {
+          orderId: order.id,
+        },
+        select: {
+          productId: true,
+          quantity:true
+        },
+      });
+
+      // Loop through and update product qty
+      for (const item of productItems) {
+        await db.product.update({
+          where: {
+            id: item.productId,
+          },
+          data: {
+            qty: {
+              decrement: item.quantity ?? 0, // Decrease qty by the quantity ordered
+            },
+          },
+        });
+      }
+
+
 
       return Response.json({ success: true });
     }

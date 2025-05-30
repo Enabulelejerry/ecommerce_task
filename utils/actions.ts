@@ -78,6 +78,8 @@ export const createProductAction = async (
 		  const file = formData.get('image') as File;
 		  const colors =  formData.get('colors')?.toString().split(',').map(c => c.trim());
 		  const sizes =  formData.get('sizes')?.toString().split(',').map(c => c.trim());
+		  const qtyString = formData.get('qty') as string 
+		  const qty = parseInt(qtyString)
 		  const validateFields = validateWithZodSchema(productSchema,rawData);
 		  const validatedFile = validateWithZodSchema(imageSchema,{image:file})
 		  const fullPath = await uploadImage(validatedFile.image)
@@ -89,6 +91,7 @@ export const createProductAction = async (
 				clerkId:user.id,
 				colors:JSON.stringify(colors),
 				sizes:JSON.stringify(sizes),
+				qty
 
 			}
 		  })
@@ -141,6 +144,10 @@ export const createProductAction = async (
 	  const rawData = Object.fromEntries(formData);
   
 	  const validatedFields = validateWithZodSchema(productSchema, rawData);
+	   const colors =  formData.get('colors')?.toString().split(',').map(c => c.trim());
+		const sizes =  formData.get('sizes')?.toString().split(',').map(c => c.trim());
+		 const qtyString = formData.get('qty') as string 
+		const qty = parseInt(qtyString)
   
 	  await db.product.update({
 		where: {
@@ -148,6 +155,9 @@ export const createProductAction = async (
 		},
 		data: {
 		  ...validatedFields,
+		  colors:JSON.stringify(colors),
+		  sizes:JSON.stringify(sizes),
+		  qty,
 		},
 	  });
 	  revalidatePath(`/admin/products/${productId}/edit`);

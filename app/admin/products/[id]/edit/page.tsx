@@ -10,7 +10,11 @@ import ImageInputContainer from '@/components/form/ImageInputContainer';
 async function EditProductPage({params}:{params:{id:string}}) {
   const {id} = params;
   const product = await fetchAdminProductDetails(id);
-  const {name,company,description,featured,price} = product;
+  const {name,company,description,featured,price,sizes,colors,qty} = product;
+  const colorArray: string[] = JSON.parse(colors || '[]');
+  const sizeArray: string[] = JSON.parse(sizes || '[]');
+	const colorString = colorArray.join(', ');
+  const sizeString = sizeArray.join(', ');
   return (
 	   <section>
       <h1 className='text-2xl font-semibold mb-8 capitalize'>update product</h1>
@@ -35,9 +39,38 @@ async function EditProductPage({params}:{params:{id:string}}) {
               label='company'
               defaultValue={company}
             />
-             <PriceInput defaultValue={price} />
-         
+             
           </div>
+
+           <div className='grid gap-4 md:grid-cols-2 my-4'>
+            <FormInput
+              type='text'
+              name='sizes'
+              label='Available Sizes (comma separated)'
+              defaultValue={sizeString}
+            />
+            
+            <FormInput
+              type='text'
+              name='colors'
+              label='Available Colors (comma separated)'
+              defaultValue={colorString}
+              />
+          
+
+          </div>
+
+          <div className='grid gap-4 md:grid-cols-2 my-4'>
+            <FormInput
+              type='number'
+              name='qty'
+              label='product quantity'
+              defaultValue={qty}
+               
+              />
+           <PriceInput defaultValue={price} />
+          </div>
+          
 
           <TextAreaInput
             name='description'

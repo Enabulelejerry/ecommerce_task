@@ -15,9 +15,12 @@ import {auth} from '@clerk/nextjs/server'
 
 async function SingleProductPage({params}:{params:{id:string}}) {
 	const  product =  await fetchSingleProduct(params.id)
-	const {name,image,company,description,price,colors,sizes} = product
+	const {name,image,company,description,price,colors,sizes,qty} = product
+	 const productQty = qty
 	const colorArray: string[] = JSON.parse(colors || '[]');
     const sizeArray: string[] = JSON.parse(sizes || '[]');
+	const colorString = colorArray.join(', ');
+     const sizeString = sizeArray.join(', ');
 	const dollarAmount =  formatCurrency(price)
 	const {userId} = auth();
     const reviewDoesNotExist = userId && !(await findExistingReview(userId,params.id))
@@ -43,11 +46,18 @@ async function SingleProductPage({params}:{params:{id:string}}) {
 				  <h4 className='text-xl mt-2'>{company}</h4>
 				  <p className='mt-3 text-md bg-muted inline-block p-2 rounded'>{dollarAmount}</p>
 				  <p className='mt-6 leading-8 text-muted-foreground'>{description}</p>
-				  <AddToCart 
+
+				   {productQty && productQty > 0 ? (
+                  <AddToCart 
 				  productId={params.id}
 				  colors={colorArray} 
-                   sizes={sizeArray}
+                  sizes={sizeArray}
+				  productQty={productQty}
 				   />
+					) : (
+					<h3 className='text-destructive mt-3 bg-red-50 p-3' >Product out of stock</h3>
+					)}
+				  
 			  </div>
 
 

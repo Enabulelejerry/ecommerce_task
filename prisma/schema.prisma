@@ -16,6 +16,7 @@ model Product {
   featured    Boolean
   image       String
   price       Int
+  qty         Int         @default(1)
   colors      String? // store JSON string like '["Red","Blue"]'
   sizes       String? // store JSON string like '["S","M","L"]'
   createdAt   DateTime    @default(now())
