@@ -46,18 +46,60 @@ export const fetchFeaturedProducts = async () => {
   return products;
 };
 
-export const fetchAllProducts = ({ search = "" }: { search: string }) => {
-  return db.product.findMany({
-    where: {
-      OR: [
-        { name: { contains: search, mode: "insensitive" } },
-        { company: { contains: search, mode: "insensitive" } },
-      ],
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+// export const fetchAllProducts = ({ search = "" }: { search: string }) => {
+//   return db.product.findMany({
+//     where: {
+//       OR: [
+//         { name: { contains: search, mode: "insensitive" } },
+//         { company: { contains: search, mode: "insensitive" } },
+//       ],
+//     },
+//     orderBy: {
+//       createdAt: "desc",
+//     },
+//   });
+// };
+
+export const fetchAllProducts = async ({
+  search = "",
+  page = 1,
+  perPage = 12,
+}: {
+  search: string;
+  page?: number;
+  perPage?: number;
+}) => {
+  const skip = (page - 1) * perPage;
+
+  const [products, totalProducts] = await Promise.all([
+    db.product.findMany({
+      where: {
+        OR: [
+          { name: { contains: search, mode: "insensitive" } },
+          { company: { contains: search, mode: "insensitive" } },
+        ],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip,
+      take: perPage,
+    }),
+    db.product.count({
+      where: {
+        OR: [
+          { name: { contains: search, mode: "insensitive" } },
+          { company: { contains: search, mode: "insensitive" } },
+        ],
+      },
+    }),
+  ]);
+
+  return {
+    products,
+    totalProducts,
+    totalPages: Math.ceil(totalProducts / perPage),
+  };
 };
 
 export const fetchSingleProduct = async (productId: string) => {
