@@ -26,6 +26,9 @@ model Product {
   reviews     Review[]
   cartItems   CartItem[]
   OrderItem   OrderItem[]
+
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
 }
 
 model Favorite {
@@ -92,6 +95,9 @@ model Order {
   paystackReference String?
   cartId            String?
   OrderItems        OrderItem[]
+  shippingDetails   Json?
+  deliveryType      String?
+  shippingMethod    String?
 }
 
 model OrderItem {
@@ -112,4 +118,13 @@ model Slider {
   imageUrl  String // URL/path to the slider image
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String?   @unique
+  products  Product[] // 👈 One-to-many relationship
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

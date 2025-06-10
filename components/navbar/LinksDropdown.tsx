@@ -4,28 +4,33 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from '@/components/ui/dropdown-menu';
-import { LuAlignLeft } from 'react-icons/lu';
-import Link from 'next/link';
-import { Button } from '../ui/button';
-import { links } from '@/utils/links';
-import UserIcon from './UserIcon';
-import { SignedIn, SignedOut, SignInButton, SignUpButton } from '@clerk/nextjs';
-import SignOutLink from './SignOutLink';
-import { auth } from '@clerk/nextjs/server';
+} from "@/components/ui/dropdown-menu";
+import { LuAlignLeft } from "react-icons/lu";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { links } from "@/utils/links";
+import UserIcon from "./UserIcon";
+import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import SignOutLink from "./SignOutLink";
+import { auth } from "@clerk/nextjs/server";
+import CategorySection from "../category/categorysection";
 
-function LinksDropdown() {
+function LinksDropdown({
+  categories,
+}: {
+  categories: { id: string; name: string }[];
+}) {
   const { userId } = auth();
   const isAdmin = userId === process.env.ADMIN_USER_ID;
 
   // Separate links visible to all users
   const publicLinks = links.filter(
-    (link) => link.label === 'products' || link.label === 'about'
+    (link) => link.label === "products" || link.label === "about"
   );
 
   // Links only for signed-in users
   const privateLinks = links.filter(
-    (link) => link.label !== 'products' && link.label !== 'about'
+    (link) => link.label !== "products" && link.label !== "about"
   );
 
   return (
@@ -48,6 +53,9 @@ function LinksDropdown() {
 
         <DropdownMenuSeparator />
 
+        {/* Category Section */}
+        {categories.length > 0 && <CategorySection categories={categories} />}
+
         <SignedOut>
           <DropdownMenuItem>
             <SignInButton mode="modal">
@@ -64,7 +72,7 @@ function LinksDropdown() {
 
         <SignedIn>
           {privateLinks.map((link) => {
-            if (link.label === 'dashboard' && !isAdmin) return null;
+            if (link.label === "dashboard" && !isAdmin) return null;
             return (
               <DropdownMenuItem key={link.href}>
                 <Link href={link.href} className="capitalize w-full">
