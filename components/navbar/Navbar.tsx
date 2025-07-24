@@ -13,7 +13,11 @@ async function Navbar() {
   return (
     <nav className="border-b">
       <Container className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 flex-wrap py-8">
-        <Logo />
+        {/* <Logo /> */}
+        <h1 className="inline-flex items-center justify-center text-white text-3xl font-bold bg-primary rounded-full w-14 h-14">
+          AF
+        </h1>
+
         <Suspense>
           <NavSearch />
         </Suspense>

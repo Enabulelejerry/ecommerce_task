@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
 
 const HomePage = () => {
-  return <>
-     <Hero />
-     <Suspense fallback={<LoadingContainer />}>
-     <FeaturedProducts />
-     </Suspense>
-  </>
+  return (
+    <>
+      <Hero />
+      <Suspense fallback={<LoadingContainer />}>
+        <FeaturedProducts />
+      </Suspense>
+    </>
+  );
 };
 export default HomePage;
